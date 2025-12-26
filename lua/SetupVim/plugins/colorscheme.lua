@@ -1,25 +1,28 @@
-
 return {
-  "folke/tokyonight.nvim",
+"EdenEast/nightfox.nvim",
   lazy = false,
   priority = 1000,
   config = function()
-    require("tokyonight").setup({
-      style = "night", -- night | storm | moon | day
+    require("nightfox").setup({
+      style = "carbonfox", -- night | storm | moon | day
     })
 
-    vim.cmd.colorscheme("tokyonight")
-    vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#ffffff" })
-    vim.api.nvim_set_hl(0, "LineNrBelow",  { fg = "#ffffff" })
+    vim.cmd.colorscheme("carbonfox")
+    
+    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ff9e64" })
+    -- Tree-sitter
+vim.api.nvim_set_hl(0, "@string", { fg = "#ffffff" })
 
- 
-    -- Tree-sitter highlight overrides
-    vim.api.nvim_set_hl(0, "@boolean", { fg = "#ffffff" })
-    vim.api.nvim_set_hl(0, "@number",  { fg = "#ffffff" })
+-- Legacy Vim syntax
+vim.api.nvim_set_hl(0, "String", { fg = "#ffffff" })
 
-    -- (optional) also override legacy groups
-    vim.api.nvim_set_hl(0, "Boolean", { fg = "#ffffff" })
-    vim.api.nvim_set_hl(0, "Number",  { fg = "#ffffff" })
-  end,
+-- LSP semantic tokens (VERY important for C, Rust, etc.)
+vim.api.nvim_set_hl(0, "@lsp.type.string", { fg = "#ffffff" })  
+
+end,
 }
+
+
+
+
 

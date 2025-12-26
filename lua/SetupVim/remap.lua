@@ -20,6 +20,11 @@ vim.keymap.set("n", "<leader>ps", function()
   })
 end)
 
+--run code
+local run = require("SetupVim.run")
+
+vim.keymap.set("n", "<leader>r", run.run_file, { desc = "Run current file" })
+
 
 vim.keymap.set("n", "<leader>p", function()
   vim.fn.jobstart({
@@ -31,6 +36,21 @@ vim.keymap.set("n", "<leader>p", function()
     "~/.local/bin/tmux-sessionizer",
   })
 end, { desc = "tmux sessionizer popup" })
+
+--commands to create tabs and move around
+-- create new tab
+vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { silent = true })
+
+-- next / previous tab
+vim.keymap.set("n", "<leader>tl", ":tabnext<CR>", { silent = true })
+vim.keymap.set("n", "<leader>th", ":tabprevious<CR>", { silent = true })
+
+-- close current tab
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { silent = true })
+
+
+
+
 
 
 --useful tricks 
