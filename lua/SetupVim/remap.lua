@@ -20,6 +20,10 @@ vim.keymap.set("n", "<leader>ps", function()
   })
 end)
 
+--treenav
+vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { silent = true })
+
+
 --run code
 local run = require("SetupVim.run")
 
