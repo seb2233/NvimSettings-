@@ -1,14 +1,21 @@
 
 #!/usr/bin/env bash
 
-PROJECTS="/Users/sebastiangal"
+PROJECTS_ROOT="/Users/sebastiangal"
+DEV_ROOT="/Users/sebastiangal/dev"
 
-selected=$(find "$PROJECTS" -mindepth 1 -maxdepth 1 -type d | fzf)
+selected=$(
+  {
+    find "$PROJECTS_ROOT" -mindepth 1 -maxdepth 1 -type d
+    find "$DEV_ROOT" -mindepth 1 -maxdepth 2 -type d
+  } 2>/dev/null | fzf
+)
+
 [ -z "$selected" ] && exit 0
 
 name=$(basename "$selected")
 
 tmux has-session -t "$name" 2>/dev/null || \
-  tmux new-session -ds "$name" -c "$selected" "exec nvim ."
+  tmux new-session -ds "$name" -c "$selected"
 
 tmux switch-client -t "$name"

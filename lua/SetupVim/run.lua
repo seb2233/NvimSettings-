@@ -6,13 +6,27 @@ function M.run_file()
 
   local ft = vim.bo.filetype
   local file = vim.fn.shellescape(vim.fn.expand("%"))
-  local file_no_ext = vim.fn.shellescape(vim.fn.expand("%:r"))
+  local file_no_ext = vim.fn.expand("%:r")
 
   if ft == "c" then
-    vim.cmd("belowright split | terminal gcc " .. file .. " -o " .. file_no_ext .. " && " .. file_no_ext)
+    vim.cmd(
+      "belowright split | terminal gcc "
+      .. file
+      .. " -o "
+      .. file_no_ext
+      .. " && ./"
+      .. file_no_ext
+    )
 
   elseif ft == "cpp" then
-    vim.cmd("belowright split | terminal g++ " .. file .. " -o " .. file_no_ext .. " && " .. file_no_ext)
+    vim.cmd(
+      "belowright split | terminal g++ "
+      .. file
+      .. " -o "
+      .. file_no_ext
+      .. " && ./"
+      .. file_no_ext
+    )
 
   elseif ft == "rust" then
     vim.cmd("belowright split | terminal cargo run")
