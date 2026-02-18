@@ -10,7 +10,7 @@ vim.keymap.set("n", "<leader>fg", function()
   require("telescope.builtin").live_grep()
 end)
 
-vim.keymap.set("n", "<C-c>", function() --this is control c
+vim.keymap.set("n", "<C-g>", function() --this is control c
   require("telescope.builtin").git_files()
 end, { desc = "Telescope git files" })
 
@@ -20,12 +20,40 @@ vim.keymap.set("n", "<leader>ps", function()
   })
 end)
 
+
+--get terminal, close with :bd
+vim.keymap.set("n", "<C-\\>", function()
+  vim.cmd("split")
+  vim.cmd("terminal")
+end, { desc = "Open terminal in horizontal split" })
+
+
+--if you wanna read header files in code 
+vim.keymap.set("n", "gD", function()
+  vim.cmd("tab split")
+  vim.lsp.buf.definition()
+end, { desc = "Go to definition in new tab" })
+
+vim.keymap.set("n", "\\<F1>", function()
+  vim.cmd("help")
+  vim.cmd("normal! /")
+end, { desc = "Help with immediate search" })
+
+-- Force-close terminal buffer safely
+vim.keymap.set({ "n", "t" }, "<leader>tt", function()
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("bd!")
+  end
+end, { silent = true })
+
+
+
 --treenav
 vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { silent = true })
 
 -- CMake keymaps
 -- CMake (Terminal.app + tmux safe)
-vim.keymap.set("n", "<F1>", "<cmd>CMakeQuickStart<CR>")
+vim.keymap.set({ "n", "i", "v", "t" }, "<F1>", "<cmd>CMakeQuickStart<CR>", { silent = true })
 vim.keymap.set("n", "<F2>", "<cmd>CMakeGenerate!<CR>")
 vim.keymap.set("n", "<F3>", "<cmd>CMakeBuild<CR>")
 vim.keymap.set("n", "<F4>", "<cmd>CMakeSelectCwd<CR>")
@@ -33,7 +61,14 @@ vim.keymap.set("n", "<F5>", "<cmd>CMakeRun<CR>")
 vim.keymap.set("n", "<F6>", "<cmd>CMakeDebug<CR>")
 vim.keymap.set("n", "<F7>", "<cmd>CMakeSelectLaunchTarget<CR>")
 
-
+-- PlatformIO (leader + function keys)
+vim.keymap.set("n", "<leader><F1>", "<cmd>PIO env<CR>")
+vim.keymap.set("n", "<leader><F2>", "<cmd>PIO run<CR>")
+vim.keymap.set("n", "<leader><F3>", "<cmd>PIO upload<CR>")
+vim.keymap.set("n", "<leader><F4>", "<cmd>PIO buildfs<CR>")
+vim.keymap.set("n", "<leader><F5>", "<cmd>PIO uploadfs<CR>")
+vim.keymap.set("n", "<leader><F6>", "<cmd>PIO monitor<CR>")
+vim.keymap.set("n", "<leader><F7>", "<cmd>PIO compiledb<CR>")
 
 
 --move btw windows 
@@ -51,7 +86,7 @@ vim.keymap.set("n", "<M-S-l>", "<C-w>>", { desc = "Resize window right" })
 vim.keymap.set("n", "<M-S-j>", "<C-w>-", { desc = "Resize window down" })
 vim.keymap.set("n", "<M-S-k>", "<C-w>+", { desc = "Resize window up" })
 
-
+--Git stuff
 --dap debugger
 
 -- DAP core controls
@@ -143,16 +178,6 @@ local run = require("SetupVim.run")
 vim.keymap.set("n", "<leader>r", run.run_file, { desc = "Run current file" })
 
 
-vim.keymap.set("n", "<leader>p", function()
-  vim.fn.jobstart({
-    "tmux",
-    "display-popup",
-    "-E",
-    "-w", "80%",
-    "-h", "80%",
-    "~/.local/bin/tmux-sessionizer",
-  })
-end, { desc = "tmux sessionizer popup" })
 
 --commands to create tabs and move around
 -- create new tab
@@ -224,4 +249,7 @@ vim.keymap.set("n", "<leader>4", function()
   require("harpoon"):list():select(4)
 end)
 
-
+--error diagnosis
+vim.keymap.set("n", "<space>s", function()
+  vim.lsp.buf.code_action()
+end, { desc = "LSP code actions (menu)" })

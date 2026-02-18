@@ -27,6 +27,10 @@ return {
 
     vim.cmd.colorscheme("carbonfox")
 
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
+  underline = true,
+  sp = "#ff7000",
+})
     vim.opt.number = true
     vim.opt.cursorline = true
     vim.opt.cursorlineopt = "number"
